@@ -112,7 +112,7 @@ def main():
     scrollbar = tk.Scrollbar(messages_frame)
     scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-    messages_list = tk.Text(messages_frame, yscrollcommand=scrollbar.set, wrap=tk.WORD)
+    messages_list = tk.Text(messages_frame, yscrollcommand=scrollbar.set, wrap=tk.WORD, bg="black", fg="white", insertbackground="white")
     messages_list.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
     scrollbar.config(command=messages_list.yview)
 
