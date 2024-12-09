@@ -22,12 +22,29 @@ chroma_client = None
 persistent_path = None
 
 # Função para extrair texto dos PDFs
+#def extract_text_from_pdf(file_path):
+#    text = ""
+#    with open(file_path, 'rb') as file:
+#        reader = PyPDF2.PdfReader(file)
+#        for page_num in range(len(reader.pages)):
+#            text += reader.pages[page_num].extract_text()
+#    return text
+
+# Função para extrair texto dos PDFs, ignorando caracteres inválidos
 def extract_text_from_pdf(file_path):
     text = ""
     with open(file_path, 'rb') as file:
         reader = PyPDF2.PdfReader(file)
         for page_num in range(len(reader.pages)):
-            text += reader.pages[page_num].extract_text()
+            try:
+                # Extração de texto com fallback para evitar erro de codificação
+                page_text = reader.pages[page_num].extract_text()
+                if page_text:
+                    # Remove ou substitui caracteres não UTF-8
+                    page_text = page_text.encode('utf-8', errors='ignore').decode('utf-8')
+                    text += page_text
+            except Exception as e:
+                print(f"Erro ao processar a página {page_num} do arquivo {file_path}: {e}")
     return text
 
 # Função para dividir o texto em chunks (trechos menores, no máximo 500 caracteres)
