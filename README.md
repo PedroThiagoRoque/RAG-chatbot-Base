@@ -53,6 +53,8 @@ Certifique-se de ter as seguintes dependências instaladas:
 
 ## Uso
 
+![Interface do Chatbot](RAG-ui.png)
+
 1. Execute o script principal:
    ```bash
    python chatRAG.py
