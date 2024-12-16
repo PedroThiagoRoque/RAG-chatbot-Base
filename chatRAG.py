@@ -86,6 +86,31 @@ def process_pdfs(directory, status_label, progress_bar):
     except Exception as e:
         status_label.config(text=f"Erro ao processar PDFs: {e}")
 
+# Função para adicionar um único PDF ao banco de dados
+def add_single_pdf_to_database(pdf_path, status_label):
+    global chroma_client
+    try:
+        if not chroma_client:
+            raise Exception("Banco de dados persistente não está configurado.")
+
+        status_label.config(text=f"Processando {os.path.basename(pdf_path)}...")
+        collection = chroma_client.get_or_create_collection(name="document_chunks")
+
+        # Extrair texto do PDF
+        text = extract_text_from_pdf(pdf_path)
+        chunks = chunk_text(text)
+
+        # Gerar embeddings e adicionar ao banco de dados
+        for chunk in chunks:
+            embedding = openai.embeddings.create(model="text-embedding-ada-002", input=chunk)
+            embedding_vector = embedding.data[0].embedding
+            collection.add(ids=[str(hash(chunk + str(pdf_path)))], embeddings=[embedding_vector], documents=[chunk])
+
+        status_label.config(text=f"{os.path.basename(pdf_path)} adicionado ao banco com sucesso!")
+    except Exception as e:
+        status_label.config(text=f"Erro ao adicionar PDF: {e}")
+
+
 # Função para recuperar chunks relevantes com base em uma consulta
 def retrieve_relevant_chunks(query, top_k=5):
     query_embedding = openai.embeddings.create(model="text-embedding-ada-002", input=query)
@@ -176,11 +201,19 @@ def main():
             chroma_client = chromadb.PersistentClient(path=persistent_path)
             status_label.config(text=f"Banco de dados carregado de: {persistent_path}")
 
+    def add_single_pdf():
+        pdf_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
+        if pdf_path:
+            threading.Thread(target=add_single_pdf_to_database, args=(pdf_path, status_label)).start()
+
     folder_button = tk.Button(root, text="Selecionar Pasta de PDFs", command=choose_pdf_directory)
     folder_button.pack(pady=5)
 
     db_button = tk.Button(root, text="Selecionar BD Persistente", command=choose_database_path)
     db_button.pack(pady=5)
+
+    add_pdf_button = tk.Button(root, text="Adicionar PDF", command=add_single_pdf)
+    add_pdf_button.pack(pady=5)
 
     root.mainloop()
 
