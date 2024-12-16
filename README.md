@@ -1,6 +1,6 @@
 # RAG Chatbot com Artigos Científicos sobre Eficiência Energética
 
-Este projeto implementa um chatbot baseado na técnica de **Retrieval-Augmented Generation (RAG)**, utilizando artigos científicos sobre eficiência energética como fonte de conhecimento. A aplicação combina recuperação de trechos relevantes com modelos de linguagem avançados para responder a perguntas do usuário.
+Este projeto implementa um chatbot baseado na técnica de **Retrieval-Augmented Generation (RAG)**, utilizando artigos científicos sobre eficiência energética como fonte de conhecimento. A aplicação combina recuperação de chunks relevantes com modelo de linguagem para responder a perguntas do usuário.
 
 ## Funcionalidades
 
@@ -8,7 +8,7 @@ Este projeto implementa um chatbot baseado na técnica de **Retrieval-Augmented 
 - **Divisão de Texto em Chunks**: Divide os textos em trechos menores para facilitar o processamento e a indexação.
 - **Banco de Dados Vetorial Persistente**: Usa a biblioteca [ChromaDB](https://www.trychroma.com/) para indexar e recuperar embeddings de trechos relevantes.
 - **Integração com OpenAI**: Utiliza o modelo `text-embedding-ada-002` para gerar embeddings e o `gpt-4o-mini` para responder às perguntas com base no contexto.
-- **Interface Gráfica (Tkinter)**: Interface amigável para carregar arquivos, configurar o banco de dados e interagir com o chatbot.
+- **Interface Gráfica (Tkinter)**: Interface básica para carregar arquivos, configurar o banco de dados e interagir com o chatbot.
 
 ## Estrutura do Projeto
 
@@ -36,7 +36,7 @@ Certifique-se de ter as seguintes dependências instaladas:
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/chatRAG.git
+   git clone https://github.com/PedroThiagoRoque/RAG-chatbot-Base
    cd chatRAG
    ```
 
@@ -65,6 +65,8 @@ Certifique-se de ter as seguintes dependências instaladas:
 3. Escolha a pasta que contém os arquivos PDF com os artigos científicos a serem processados.
 
 4. Insira perguntas relacionadas à eficiência energética no campo de entrada e receba respostas baseadas no conteúdo dos artigos carregados.
+
+5. Adicione conteúdos individualmente em PDF com o botão 'Adicionar PDF'.
 
 ## Contribuição
 
