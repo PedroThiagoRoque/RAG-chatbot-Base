@@ -131,11 +131,7 @@ def generate_response(query, status_label):
             model="gpt-4o-mini",
             messages=[
             {"role": "system", "content": (
-                "Você é um assistente especializado em eficiência energética e temas relacionados. "
-                "Seu objetivo é criar respostas explicativas ao usuário utilizando exclusivamente as informações presentes nos chunks fornecidos no contexto. "
-                "Você pode reformular o conteúdo dos chunks, porém sem se afastar de seu significado original e sem incluir informações não suportadas pelo contexto. "
-                "Se não for possível responder integralmente com base nos chunks, responda: 'Esta informação não consta nos artigos armazenados'. "
-                "Sempre que o conteúdo ou a pergunta estiverem em outro idioma, traduza para o Português do Brasil antes de responder."
+                "Você é um assistente especializado em eficiência energética e temas relacionados. Seu objetivo é criar respostas explicativas ao usuário utilizando as informações presentes nos chunks fornecidos no contexto. Você pode reformular o conteúdo dos chunks, porém sem se afastar de seu significado original e sem incluir informações não suportadas pelo contexto. Se não for possível responder com base nos chunks, responda: 'Esta informação não consta nos artigos armazenados'. Sempre que o conteúdo ou a pergunta estiverem em outro idioma, traduza para o Português do Brasil antes de responder."
             )},
                 {"role": "user", "content": f"Contexto: {context}\n\nPergunta: {query}"}
             ],
