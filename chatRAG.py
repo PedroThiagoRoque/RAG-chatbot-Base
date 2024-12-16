@@ -105,9 +105,10 @@ def generate_response(query, status_label):
         response = openai.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-            {"role": "system", "content": "Você é um assistente para responder perguntas sobre eficiência energética e temas relacionados. Você deve utilizar os chunks contidos no contexto para criar as respostas para o usuário. Caso não tenha a resposta nos chunks de contexto, responda: 'Não possuo essa informação no momento'"},
+            {"role": "system", "content": "Você é um assistente para responder perguntas sobre eficiência energética e temas relacionados. Caso tenho algum conteúdo na Query ou no contexto em uma língua que não seja Português do Brasil, traduza. Você deve utilizar os chunks contidos no contexto para criar as respostas para o usuário. Se a resposta for formada, mais de 50% por contexto externo aos chunks então responda, responda: 'Esta informação não consta nos artigos armazenados'"},
                 {"role": "user", "content": f"Contexto: {context}\n\nPergunta: {query}"}
             ],
+            temperature=0.5,
             max_tokens=150
         )
         status_label.config(text="Resposta gerada com sucesso!")
